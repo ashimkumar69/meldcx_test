@@ -1,22 +1,23 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import InputAdornment from "@mui/material/InputAdornment";
+import EmailIcon from "@mui/icons-material/Email";
+import NewReleasesIcon from "@mui/icons-material/NewReleases";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import { grey } from "@mui/material/colors";
 
 // import axios from "../helpers/axios-instance";
 import { AuthContext } from "../context/auth-context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 export default function Login() {
   const authContext = React.useContext(AuthContext);
   let navigate = useNavigate();
-
-  React.useEffect(() => {
-    if (authContext.isLoggedIn) navigate("/devices", { replace: true });
-  }, [navigate, authContext.isLoggedIn]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,51 +39,104 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <React.Fragment>
+      {authContext.isLoggedIn && <Navigate to="/devices" replace={true} />}
       <Box
         sx={{
-          marginTop: "50%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          width: "100%",
+          height: "100%",
+          backgroundColor: grey["900"],
         }}
       >
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+        <Container component="main" maxWidth="xs">
+          <Box
+            sx={{
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            Login
-          </Button>
-        </Box>
+            <Card
+              sx={{
+                width: "100%",
+              }}
+            >
+              <CardContent>
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography component="h1" variant="h3">
+                    Login
+                  </Typography>
+                  <Box
+                    component="form"
+                    onSubmit={handleSubmit}
+                    noValidate
+                    sx={{
+                      mt: 1,
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      placeholder="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <NewReleasesIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{ mt: 3, px: 4, py: 1 }}
+                    >
+                      Log In
+                    </Button>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+          </Box>
+        </Container>
       </Box>
-    </Container>
+    </React.Fragment>
   );
 }
