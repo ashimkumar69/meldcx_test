@@ -9,7 +9,9 @@ import { deepOrange, grey } from "@mui/material/colors";
 
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
-import DeviceCircle from "../components/DeviceCircles";
+import ActiveDevices from "../components/ActiveDevices";
+
+import axios from "../helpers/axios-instance";
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -22,11 +24,36 @@ export default function Devices() {
   const [activeDevices, setActiveDevices] = React.useState(2);
 
   React.useEffect(() => {
+    // async function getDevices() {
+    //   const response = await axios.get("/devices");
+    //   console.log(response);
+    // }
+
     const intervalId = setInterval(() => {
+      // getDevices();
       setActiveDevices(getRndInteger(0, 10));
     }, 5000);
     return () => clearInterval(intervalId);
   }, []);
+
+  const notifyHandler = async () => {
+    // const data = new FormData();
+    // data.set("name", "test");
+    // data.set("email", "test@test.com");
+    // data.set("repoUrl", "test");
+    // data.set("message", "test");
+
+    try {
+      // const response = await axios.post("/notify", data, {
+      //   headers: {
+      //     Authorization: `Bearer ${localStorage.getItem("meldcx_token")}`,
+      //   },
+      // });
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -49,7 +76,7 @@ export default function Devices() {
               alignItems: "center",
             }}
           >
-            <DeviceCircle activeDevices={activeDevices} />
+            <ActiveDevices activeDevices={activeDevices} />
             <Typography
               component="h1"
               variant="h2"
@@ -108,6 +135,7 @@ export default function Devices() {
                   },
                 }}
                 disableElevation
+                onClick={notifyHandler}
               >
                 Notify
               </Button>

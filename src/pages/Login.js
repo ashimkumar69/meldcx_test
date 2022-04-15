@@ -15,14 +15,32 @@ import { grey } from "@mui/material/colors";
 import { AuthContext } from "../context/auth-context";
 import { useNavigate, Navigate } from "react-router-dom";
 
+const loginInitialState = { email: null, password: null };
+
+function loginReducer(state, { type, payload }) {
+  switch (type) {
+    case "LOGIN_ERROR":
+      return {
+        email: payload?.email ?? null,
+        password: payload?.password ?? null,
+      };
+    default:
+      throw new Error("Login Error");
+  }
+}
+
 export default function Login() {
   console.log("Login");
   const authContext = React.useContext(AuthContext);
   let navigate = useNavigate();
+  const [loginState, loginDispatch] = React.useReducer(
+    loginReducer,
+    loginInitialState
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
+    const data = new FormData(event.currentTarget);
 
     try {
       // const response = await axios.post("/login", data, {
@@ -32,10 +50,19 @@ export default function Login() {
       //   },
       // });
       // console.log(response);
+
+      if (!data.get("email") || !data.get("password")) throw "Login failed";
       authContext.login("meldcx_token_123");
       navigate("/devices", { replace: true });
     } catch (error) {
-      console.error(error);
+      // console.error(error);
+      loginDispatch({
+        type: "LOGIN_ERROR",
+        payload: {
+          email: "Give validate email",
+          password: "Give validate password",
+        },
+      });
     }
   };
 
@@ -104,6 +131,8 @@ export default function Login() {
                           </InputAdornment>
                         ),
                       }}
+                      error={loginState.email ? true : false}
+                      helperText={loginState.email}
                     />
                     <TextField
                       variant="outlined"
@@ -122,6 +151,8 @@ export default function Login() {
                           </InputAdornment>
                         ),
                       }}
+                      error={loginState.password ? true : false}
+                      helperText={loginState.password}
                     />
 
                     <Button
