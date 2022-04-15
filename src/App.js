@@ -7,6 +7,7 @@ import Devices from "./pages/Devices";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 export default function App() {
+  console.log("App");
   return (
     <React.Fragment>
       <CssBaseline />
