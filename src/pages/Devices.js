@@ -11,14 +11,14 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import ActiveDevices from "../components/ActiveDevices";
 
-import axios from "../helpers/axios-instance";
+//import axios from "../helpers/axios-instance";
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
 export default function Devices() {
-  console.log("Devices");
+  // console.log("Devices");
   const authContext = React.useContext(AuthContext);
 
   const [activeDevices, setActiveDevices] = React.useState(2);

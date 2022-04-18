@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { grey } from "@mui/material/colors";
 
 export default React.memo(function ActiveDevices(props) {
-  console.log("DeviceCircles");
+  // console.log("ActiveDevices");
   return (
     <Box
       sx={{

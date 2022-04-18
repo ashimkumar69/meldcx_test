@@ -11,7 +11,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { grey } from "@mui/material/colors";
 
-// import axios from "../helpers/axios-instance";
+//import axios from "../helpers/axios-instance";
 import { AuthContext } from "../context/auth-context";
 import { useNavigate, Navigate } from "react-router-dom";
 
@@ -30,7 +30,7 @@ function loginReducer(state, { type, payload }) {
 }
 
 export default function Login() {
-  console.log("Login");
+  // console.log("Login");
   const authContext = React.useContext(AuthContext);
   let navigate = useNavigate();
   const [loginState, loginDispatch] = React.useReducer(
@@ -59,8 +59,8 @@ export default function Login() {
       loginDispatch({
         type: "LOGIN_ERROR",
         payload: {
-          email: "Give validate email",
-          password: "Give validate password",
+          email: "Email field required",
+          password: "Password field required",
         },
       });
     }
